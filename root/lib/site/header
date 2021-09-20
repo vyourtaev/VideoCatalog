@@ -1,0 +1,44 @@
+<!-- BEGIN site/header -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="[% c.uri_for('/video/list') %]">Video Catalog 1.0</a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="[% c.uri_for('/video/list') %]">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="[% c.uri_for('/video/form_upload') %]" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Upload video from file">Upload
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="[% c.uri_for('/video/form_create') %]" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Add new video">Add
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Sort
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="[% c.uri_for('/video/list/id') %]">ID</a></li>
+            <li><a class="dropdown-item" href="[% c.uri_for('/video/list/title') %]">Title</a></li>
+            <li><a class="dropdown-item" href="[% c.uri_for('/video/list/release') %]">Year</a></li>
+            <li><a class="dropdown-item" href="[% c.uri_for('/video/list/format') %]">Format</a></li>
+          </ul>
+        </li>
+      </ul>
+      <form class="d-flex" action="[% c.uri_for('search_by') %]" method="post">
+        <li class="nav-item dropdown">
+        <select id="search_by" name="search_by" class="form-select">
+            <option value="1">Title</option>
+            <option value="2">Actor</option>
+        </select>
+          </ul>
+        </li>
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search_pattern">
+        <button class="btn btn-outline-light" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+<!-- END site/header -->

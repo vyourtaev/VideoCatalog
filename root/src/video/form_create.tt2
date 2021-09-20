@@ -1,0 +1,27 @@
+<form action="[% c.uri_for('form_submit') %]" method="post">
+  <fieldset >
+  <legend>Add new video to the catalog</legend>
+  <div class="mb-3">
+    <label for="Title" class="form-label">Title of the video</label>
+    <input type="text" class="form-control" id="title" name="title">
+  </div>
+  <div class="mb-3">
+    <label for="Release Year" class="form-label">Release Year</label>
+    <input type="number" class="form-control" id="release" name="release">
+  </div>
+  <div class="mb-3">
+      <label for="inputFormat" class="form-label">Video format select menu</label>
+      <select id="format" name="format" class="form-select">
+        <option selected>DVD</option>
+        <option value="1">DVD</option>
+        <option value="2">VHS</option>
+        <option value="3">Blue-Ray</option>
+      </select>
+  </div>
+  <div class="mb-5">
+    <label for="Stars" class="form-label">Stars in the video</label>
+    <input type="text" class="form-control" id="stars" name="stars">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  </fieldset>
+</form>

@@ -1,0 +1,11 @@
+<!-- BEGIN site/footer -->
+ <footer>
+<nav class="navbar fixed-bottom navbar-light bg-light">
+  <div class="container-fluid">
+    <span class="navbar-text">
+      <p id="copyright">&copy; [% site.copyright %]</p>
+    </span>
+  </div>
+</nav>
+ </footer>
+<!-- END site/footer -->

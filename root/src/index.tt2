@@ -1,0 +1,7 @@
+<h1>INDEX</h1>
+<p>
+    This is a TT view template, called '[% template.name %]'.
+</p>
+<p>The message is: [% message %]</p>
+<p>The base is [% base %]</p>
+<p>The name is [% name %]</p>
