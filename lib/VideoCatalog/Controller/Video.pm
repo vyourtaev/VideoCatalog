@@ -183,7 +183,11 @@ sub form_upload_submit :Chained('base') :PathPart('form_upload_submit') :Args(0)
                  }
 	      } 
 
-	      my $video = $c->model('VideoDB::Video')->populate(\@upload_content);
+	      foreach my $item (@upload_content) {
+	          $c->model('VideoDB::Video')->update_or_create($item);
+	      }
+
+	      # my $video = $c->model('VideoDB::Video')->populate(\@upload_content);
 
            }
         }

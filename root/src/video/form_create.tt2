@@ -13,9 +13,9 @@
       <label for="inputFormat" class="form-label">Video format select menu</label>
       <select id="format" name="format" class="form-select">
         <option selected>DVD</option>
-        <option value="1">DVD</option>
-        <option value="2">VHS</option>
-        <option value="3">Blue-Ray</option>
+        <option value="DVD">DVD</option>
+        <option value="VHS">VHS</option>
+        <option value="Blue-Ray">Blue-Ray</option>
       </select>
   </div>
   <div class="mb-5">
