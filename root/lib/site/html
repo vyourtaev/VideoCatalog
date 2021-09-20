@@ -19,6 +19,8 @@
   </style>
  </head>
  <body>
+    <span class="message">[% status_msg %]</span>
+    <span class="error">[% error_msg %]</span>
 [% content %]
 
 [% IF Catalyst.debug; %]

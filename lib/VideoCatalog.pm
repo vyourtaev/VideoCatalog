@@ -11,16 +11,15 @@ use Catalyst::Runtime 5.80;
 # list if you're using it.
 #
 #         -Debug: activates the debug mode for very useful log messages
+#         StackTrack
 #   ConfigLoader: will load the configuration from a Config::General file in the
 #                 application's home directory
 # Static::Simple: will serve static files from the application's root
 #                 directory
 
 use Catalyst qw/
-    -Debug
     ConfigLoader
     Static::Simple
-    StackTrace
 /;
 
 extends 'Catalyst';

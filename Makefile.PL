@@ -19,7 +19,6 @@ requires 'DBIx::Class::TimeStamp';
 requires 'SQL::Translator';
 requires 'Email::Valid';
 requires 'Catalyst::Action::RenderView';
-requires 'Catalyst::Plugin::StackTrace';
 requires 'Term::Size::Any';
 requires 'Moose';
 requires 'MooseX::NonMoose~0.25';

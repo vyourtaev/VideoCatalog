@@ -1,6 +1,7 @@
 package VideoCatalog::Controller::Video;
 use Moose;
 use namespace::autoclean;
+use Try::Tiny;
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -37,8 +38,8 @@ sub base :Chained('/') :PathPart('video') :CaptureArgs(0) {
 sub list :Chained('base'): PathPart('list'): Args() {
     my ( $self, $c, $order_by ) = @_;
 
-    $c->log->debug("Order_by ".$order_by);
-    
+    $order_by = "id" unless $order_by;
+
     my $page = $c->req->params->{page} || 1; 
 
     my $rs = $c->stash->{resultset}->search(
@@ -52,6 +53,7 @@ sub list :Chained('base'): PathPart('list'): Args() {
 
     $c->stash(videos => [$rs->all]);
     $c->stash(pager => $rs->pager);
+    $c->stash->{status_msg} = "Video deleted.";
 
     $c->stash(template => 'video/list.tt2');
 }
@@ -85,8 +87,13 @@ Delete a video
 sub delete :Chained('base') :PathPart('delete') :Args(1) {
     my ($self, $c, $id) = @_;
 
-    $c->stash->{resultset}->find($id)->delete;
-    $c->stash->{status_msg} = "Book deleted.";
+    eval { 
+       $c->stash->{resultset}->find($id)->delete; 
+       $c->stash->{status_msg} = "Video deleted.";
+    };
+    if($@) { 
+       $c->stash->{error_msg} = "Error [$@] $_";
+    }
 
     # Forward to the list action/method in this controller
     $c->response->redirect($c->uri_for($self->action_for('list')));
@@ -99,7 +106,7 @@ form submit
 =cut
 
 sub form_submit :Chained('base') :PathPart('form_submit') :Args(0) {
-    my ( $self, $c, $title, $release, $format, $stars ) = @_;
+    my ( $self, $c ) = @_;
 
     my $title     = $c->request->params->{title}	|| 'N/A';
     my $release   = $c->request->params->{release}	|| 'N/A';
@@ -113,6 +120,8 @@ sub form_submit :Chained('base') :PathPart('form_submit') :Args(0) {
 	format => $format,
 	stars => $stars
 	});
+
+    $c->stash->{status_msg} = "Video added.";
 
     $c->response->redirect($c->uri_for($self->action_for('list')));
 }
