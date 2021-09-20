@@ -14,6 +14,7 @@ requires 'Catalyst::Runtime' => '5.90128';
 requires 'Catalyst::Plugin::ConfigLoader';
 requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::Helper::Model::DBIC::Schema';
+required 'Catalyst::Helper::View::Bootstrap';
 requires 'DBIx::Class::Schema::Loader';
 requires 'DBIx::Class::TimeStamp';
 requires 'SQL::Translator';

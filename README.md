@@ -2,6 +2,11 @@
 # Task overview
 
 The project implemented as MVC Catalyst application. For persistent storage used SQLite DB. 
+```
+Catalyst 5.90128
+Catalyst::Helper::View::TT
+Catalyst::Model::DBIC::Schema
+```
 
 # Main functionaliy
 
@@ -35,11 +40,13 @@ script/videocatalog_server.pl
 As soon as application required a lot of modules and installation all of them from the scratch required some time there is a prepared docker image that includes all dependencies
 
 ```
+git clone git@github.com:vyourtaev/VideoCatalog.git 
+
 docker pull yourtaev/perl:5.28
 
-docker run --ti -p 3000:3000 -v $PWD:/app yourtaev/perl:5.28 script/videocatalog_server.pl
+docker run --rm -p 3000:3000 -v $PWD:/app -w /app yourtaev/perl:5.28 script/videocatalog_server.pl
 
-In browser navigate http://localhost:3000
+In browser navigate http://localhost:3000/video/list
 
 ```
 
@@ -76,7 +83,6 @@ All tests successful.
 Files=3, Tests=16,  2 wallclock secs ( 0.03 usr  0.00 sys +  1.04 cusr  0.12 csys =  1.19 CPU)
 Result: PASS
 ```
-
 
 
 
