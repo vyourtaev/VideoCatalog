@@ -99,7 +99,7 @@ form submit
 =cut
 
 sub form_submit :Chained('base') :PathPart('form_submit') :Args(0) {
-    my ( $self, $c, $title, $release, $format, $stars ) = @_;
+    my ( $self, $c ) = @_;
 
     my $title     = $c->request->params->{title}	|| 'N/A';
     my $release   = $c->request->params->{release}	|| 'N/A';

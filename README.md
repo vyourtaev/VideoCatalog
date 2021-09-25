@@ -37,7 +37,7 @@ As soon as application required a lot of modules and installation all of them fr
 ```
 docker pull yourtaev/perl:5.28
 
-docker run --ti -p 3000:3000 -v $PWD:/app yourtaev/perl:5.28 script/videocatalog_server.pl
+docker run  -p 3000:3000 -v $PWD:/app -w /app yourtaev/perl:5.28 script/videocatalog_server.pl -r
 
 In browser navigate http://localhost:3000
 
