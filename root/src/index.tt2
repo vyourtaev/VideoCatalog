@@ -1,7 +1,49 @@
-<h1>INDEX</h1>
-<p>
-    This is a TT view template, called '[% template.name %]'.
-</p>
-<p>The message is: [% message %]</p>
-<p>The base is [% base %]</p>
-<p>The name is [% name %]</p>
+<div class="card" style="width: 68rem;">
+  <div class="card-body">
+    <h5 class="card-title">Test project Video Catalog</h5>
+    <h6 class="card-subtitle mb-2 text-muted">MVC Catalyst 5.90128</h6>
+    <p class="card-text">
+The project implemented as MVC Catalyst application. For persistent storage used SQLite DB. 
+<div class="container">
+<ul>
+   <li>Catalyst 5.90128</li>
+   <li>Catalyst::Helper::View::TT</li>
+   <li>Catalyst::Model::DBIC::Schema</li>
+</ul>
+</div>
+
+<h5> Main functionaliy</h5>
+<div class="container">
+   <p>
+     Application supports main CRUD functional, that allows
+   </p>
+   <ul>
+      <li>Create new movie</li>
+      <li>Update already created movie</li>
+      <li>Read the list of all movies and detailed information about each one</li>
+      <li>Title of the movie</li>
+      <li>Year of release</li>
+      <li>Format distribution (DVD/VHS/Blue-Ray)</li>
+      <li>Stars</li>
+    </ul>
+    <p>
+       <ul>
+       <li>Movie can be searched by Title</li>
+       <li>Movie can be searched by Actor</li>
+       <li>Movie list sortable by Title, Actor, Year of release and Format</li>
+       <li>Bulk upload from a text file</li>
+       </ul>
+    </p>
+</div>
+
+    </p>
+    <a class="card-link" href="[% c.uri_for('/video/list') %]">Video Catolog</a>
+    [% IF c.user_exists %]
+    Please Note: You are already logged in as '[% c.user.username %]'.
+    You can <a href="[% c.uri_for('/logout') %]">logout</a> here.
+    [% ELSE %]
+    You need to log in to use this application.
+    [% END %]
+  </div>
+</div>
+

@@ -1,6 +1,7 @@
 package VideoCatalog::Controller::Video;
 use Moose;
 use namespace::autoclean;
+use Try::Tiny;
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -26,6 +27,9 @@ sub base :Chained('/') :PathPart('video') :CaptureArgs(0) {
     my ($self, $c) = @_;
 
     $c->stash(resultset => $c->model('VideoDB::Video'));
+
+    # Load status messages
+    $c->load_status_msgs;
 }
 
 
@@ -33,12 +37,11 @@ sub base :Chained('/') :PathPart('video') :CaptureArgs(0) {
 
 =cut
 
-# sub list :Local {
 sub list :Chained('base'): PathPart('list'): Args() {
     my ( $self, $c, $order_by ) = @_;
 
-    $c->log->debug("Order_by ".$order_by);
-    
+    $order_by = "id" unless $order_by;
+
     my $page = $c->req->params->{page} || 1; 
 
     my $rs = $c->stash->{resultset}->search(
@@ -85,11 +88,20 @@ Delete a video
 sub delete :Chained('base') :PathPart('delete') :Args(1) {
     my ($self, $c, $id) = @_;
 
-    $c->stash->{resultset}->find($id)->delete;
-    $c->stash->{status_msg} = "Book deleted.";
+    eval { 
+       $c->stash->{resultset}->find($id)->delete; 
+       #       $c->stash->{status_msg} = "Video deleted.";
+       $c->flash->{status_msg} = "Video deleted";
+    };
+    if($@) { 
+       $c->stash->{error_msg} = "Error [$@] $_";
+    }
 
     # Forward to the list action/method in this controller
-    $c->response->redirect($c->uri_for($self->action_for('list')));
+    #$c->response->redirect($c->uri_for($self->action_for('list')));
+    # Using StatusMessage plugin
+    $c->response->redirect($c->uri_for($self->action_for('list'),
+		    {mid => $c->set_status_msg("Deleted video $id")}));
 }
 
 =head2 form_submit
@@ -113,6 +125,8 @@ sub form_submit :Chained('base') :PathPart('form_submit') :Args(0) {
 	format => $format,
 	stars => $stars
 	});
+
+    $c->stash->{status_msg} = "Video added.";
 
     $c->response->redirect($c->uri_for($self->action_for('list')));
 }
@@ -174,7 +188,11 @@ sub form_upload_submit :Chained('base') :PathPart('form_upload_submit') :Args(0)
                  }
 	      } 
 
-	      my $video = $c->model('VideoDB::Video')->populate(\@upload_content);
+	      foreach my $item (@upload_content) {
+	          $c->model('VideoDB::Video')->update_or_create($item);
+	      }
+
+	      # my $video = $c->model('VideoDB::Video')->populate(\@upload_content);
 
            }
         }

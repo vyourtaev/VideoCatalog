@@ -11,16 +11,24 @@ use Catalyst::Runtime 5.80;
 # list if you're using it.
 #
 #         -Debug: activates the debug mode for very useful log messages
+#         StackTrack
 #   ConfigLoader: will load the configuration from a Config::General file in the
 #                 application's home directory
 # Static::Simple: will serve static files from the application's root
 #                 directory
 
 use Catalyst qw/
-    -Debug
     ConfigLoader
     Static::Simple
+
     StackTrace
+
+    Authentication
+    Session
+    Session::Store::File
+    Session::State::Cookie
+
+    StatusMessage
 /;
 
 extends 'Catalyst';
@@ -43,6 +51,17 @@ __PACKAGE__->config(
     enable_catalyst_header => 1, # Send X-Catalyst header
     encoding => 'UTF-8', # Setup request decoding and response encoding
     default_view => 'Web',
+);
+
+# Configure SimpleDB Authentication
+__PACKAGE__->config(
+    'Plugin::Authentication' => {
+        default => {
+            class           => 'SimpleDB',
+            user_model      => 'AuthDB::User',
+            password_type   => 'self_check',
+        },
+    },
 );
 
 # Start the application
