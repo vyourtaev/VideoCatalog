@@ -22,6 +22,18 @@ VideoCatalog::Controller::Root - Root Controller for VideoCatalog
 
 =head1 METHODS
 
+=head2 error_noperms
+ 
+Permissions error screen
+ 
+=cut
+ 
+sub error_noperms :Chained('/') :PathPart('error_noperms') :Args(0) {
+    my ($self, $c) = @_;
+ 
+    $c->stash(template => 'error_noperms.tt2');
+}
+
 =head2 index
 
 The root page (/)

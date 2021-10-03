@@ -1,13 +1,18 @@
 use strict;
 use warnings;
 
-use Test::More tests => 14;
+use Test::More tests => 15;
 
 use Test::WWW::Mechanize;
 
 my $mech = Test::WWW::Mechanize->new( );
 
 $mech->get_ok('http://localhost:3000', 'Conect to Root Controller: http://localhost');
+
+$mech->post_ok('http://localhost:3000/login', {
+		username => 'admin',
+		password => 'admin'
+	}, "Login successful");
 
 $mech->get_ok('http://localhost:3000/video/list', 'Connect Video Controller: http://localhost/video/list');
 

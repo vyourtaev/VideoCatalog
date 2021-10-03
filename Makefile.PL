@@ -24,6 +24,7 @@ required 'Catalyst::Plugin::Session::Store::File';
 required 'Catalyst::Plugin::StatusMessage';
 # Authentication 
 required 'Catalyst::Plugin::Authentication';
+required 'Catalyst::Plugin::Authorization::Roles';
 # SHA-1 password
 required 'DBIx::Class::PassphraseColumn';
 requires 'DBIx::Class::TimeStamp';

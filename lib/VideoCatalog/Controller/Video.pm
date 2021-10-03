@@ -88,20 +88,30 @@ Delete a video
 sub delete :Chained('base') :PathPart('delete') :Args(1) {
     my ($self, $c, $id) = @_;
 
-    eval { 
-       $c->stash->{resultset}->find($id)->delete; 
-       #       $c->stash->{status_msg} = "Video deleted.";
-       $c->flash->{status_msg} = "Video deleted";
-    };
-    if($@) { 
-       $c->stash->{error_msg} = "Error [$@] $_";
-    }
+    # Approach #1 call the method from ResultSet has_role 
+    # and redirect user to error_permission page
+    
+    # my $video = $c->stash->{resultset}->find($id);
+    # $c->detach('/error_noperms') unless $video->delete_allowed_by($c->user->get_object);
 
-    # Forward to the list action/method in this controller
-    #$c->response->redirect($c->uri_for($self->action_for('list')));
-    # Using StatusMessage plugin
-    $c->response->redirect($c->uri_for($self->action_for('list'),
+    # Approach #2 check the role from current user and 
+    # skip delete. Status message appeared.
+    if ( $c->check_user_roles('admin')) {
+
+       eval { 
+          $c->stash->{resultset}->find($id)->delete; 
+          $c->flash->{status_msg} = "Video deleted";
+       };
+       if($@) { 
+          $c->stash->{error_msg} = "Error [$@] $_";
+       }
+
+       $c->response->redirect($c->uri_for($self->action_for('list'),
 		    {mid => $c->set_status_msg("Deleted video $id")}));
+    } else {
+       $c->response->redirect($c->uri_for($self->action_for('list'),
+		    {mid => $c->set_error_msg("Unauthorized!  $id")}));
+    }
 }
 
 =head2 form_submit
@@ -230,7 +240,7 @@ sub search_by_title :Chained('base') :PathPart('search_by_title') :Args(0) {
 
     $c->stash(videos => [
             $c->model('VideoDB::Video')
-		->search_by_actor($search_pattern)
+		->search_by_title($search_pattern)
         ]);
 
     $c->stash(template => 'video/list.tt2');

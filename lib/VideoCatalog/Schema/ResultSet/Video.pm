@@ -49,5 +49,10 @@ sub created_after {
         created => { '>' => $date_str }
     });
 }
+
+sub delete {
+    my ($self, $id ) = @_;
+    return "Deleted";
+}
  
 1;

@@ -152,6 +152,18 @@ __PACKAGE__->add_columns(
     },
 );
 
+=head2 has_role
+
+Check role in the roles list
+
+=cut
+
+sub has_role {
+   my ($self, $role ) = @_;
+   my @list = grep { $_->role if $_->role eq $role  } $self->roles;
+   return @list;
+}
+
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
 __PACKAGE__->meta->make_immutable;
